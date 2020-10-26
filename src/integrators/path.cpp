@@ -113,6 +113,8 @@ public:
         Float emission_weight(1.f);
 
         Spectrum throughput(1.f), result(0.f);
+        if (unlikely(m_max_depth == 0))
+            return { result, false };
 
         // ---------------------- First intersection ----------------------
 
