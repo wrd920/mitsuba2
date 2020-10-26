@@ -300,7 +300,8 @@ public:
         InputFloat* normal_ptr   = vertex_normals.get();
         for (ScalarSize i = 0; i < m_vertex_count; ++i) {
             InputPoint3f p = ek::load_unaligned<InputPoint3f>(position_ptr);
-            ek::store_unaligned(position_ptr, m_to_world.transform_affine(p));
+            p = m_to_world.transform_affine(p);
+            ek::store_unaligned(position_ptr, p);
             position_ptr += 3;
             m_bbox.expand(p);
 
