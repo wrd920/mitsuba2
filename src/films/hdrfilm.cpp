@@ -248,6 +248,18 @@ public:
         return true;
     }
 
+    void reweight(double weight) override {
+        size_t weight_idx = (size_t) -1;
+        for (size_t i = 0; i < m_channels.size(); ++i) {
+            if (m_channels[i] == "W")
+                weight_idx = i;
+        }
+        if (weight_idx == (size_t) -1)
+            Throw("Could not find weight channel 'W' in: %s", m_channels);
+
+        m_storage->overwrite_channel(weight_idx, weight);
+    }
+
     ref<Bitmap> bitmap(bool raw = false) override {
         scoped_migrate_to_host scope(m_storage->data());
 
