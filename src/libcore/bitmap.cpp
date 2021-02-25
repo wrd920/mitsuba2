@@ -65,7 +65,7 @@ NAMESPACE_BEGIN(mitsuba)
 
 Bitmap::Bitmap(PixelFormat pixel_format, Struct::Type component_format,
                const Vector2u &size, size_t channel_count,
-               std::vector<std::string> channel_names, uint8_t *data)
+               const std::vector<std::string> &channel_names, uint8_t *data)
     : m_data(data), m_pixel_format(pixel_format),
       m_component_format(component_format), m_size(size), m_owns_data(false) {
 
@@ -632,13 +632,13 @@ std::vector<std::pair<std::string, ref<Bitmap>>> Bitmap::split() const {
         if (has_rgb || has_xyz || has_y) {
             target = new Bitmap(
                 has_rgb
-                    ? (has_a ? PixelFormat::RGBA
-                            : PixelFormat::RGB)
-                    : (has_xyz
-                    ? (has_a ? PixelFormat::XYZA
-                                : PixelFormat::XYZ)
-                    : (has_a ? PixelFormat::YA
-                                : PixelFormat::Y)),
+                ? (has_a ? PixelFormat::RGBA
+                        : PixelFormat::RGB)
+                : (has_xyz
+                ? (has_a ? PixelFormat::XYZA
+                            : PixelFormat::XYZ)
+                : (has_a ? PixelFormat::YA
+                            : PixelFormat::Y)),
                 m_component_format,
                 m_size
             );
